@@ -1,0 +1,10 @@
+/vendor
+/.idea
+Homestead.json
+Homestead.yaml
+.env
+laravel-admin
+saas-旅得专用接口文档.md
+/storage/laravels.pid
+/storage/laravels.json
+/dishcheng2/lara_lumen_elasticsearch
