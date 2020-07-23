@@ -1,5 +1,5 @@
 {
-    "name": "caicheng/lara_lumen_elasticsearch",
+    "name": "dishcheng/lara_lumen_elasticsearch",
     "type": "composer-plugin",
     "license": "MIT",
     "keywords": ["lumen", "laravel", "elasticsearch"],
