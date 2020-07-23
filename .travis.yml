@@ -7,6 +7,7 @@ php:
 dist: trusty
 sudo: false
 
-install: travis_retry composer install --no-interaction --prefer-source
-
-script: ./vendor/bin/phpunit --verbose --coverage-text
+before_script:
+  - composer self-update
+  - composer install --prefer-source --no-interaction --dev
+  - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable -n; fi;
