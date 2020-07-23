@@ -15,6 +15,11 @@
             "DishCheng\\LaraLumenElasticSearch\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "DishCheng\\LaraLumenElasticSearch\\Tests\\": "tests"
+        }
+    },
     "require": {
         "php": "^7.1",
         "elasticsearch/elasticsearch": "^7.0"
