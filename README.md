@@ -10,7 +10,7 @@ Project based on [elastic/elasticsearch-php](https://github.com/elastic/elastics
 name |  version
 :---:|:---:
 lumen or laravel |>=6.0
-elasticsearch | >=
+elasticsearch | >=7.0
 
 ## Document
 Documentation can be found on the [wiki](https://github.com/dishcheng/lara_lumen_elasticsearch/wiki).
