@@ -195,7 +195,7 @@ dd($res, $res->getItems(), $res->totalHitsNumber(), $res->maxScore(),$res->getAg
 
 
 ## contact me
-![wechat](https://cos.cc430.cn/image/WechatIMG5.jpeg])
+![wechat](https://user-images.githubusercontent.com/26062252/88262888-a24c7a00-ccfb-11ea-849b-0d2852c73a78.jpeg])
 
 ## License
 Open-sourced software licensed under the MIT license.
