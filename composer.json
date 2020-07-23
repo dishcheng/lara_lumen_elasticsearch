@@ -1,0 +1,29 @@
+{
+    "name": "caicheng/lara_lumen_elasticsearch",
+    "type": "composer-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "caicheng",
+            "email": "mattcai251@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "DishCheng\\LaraLumenElasticSearch\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.1",
+        "elasticsearch/elasticsearch": "^7.0"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DishCheng\\LaraLumenElasticSearch\\LaraElasticSearchProvider"
+            ],
+            "aliases": {
+            }
+        }
+    }
+}
