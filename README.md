@@ -2,7 +2,7 @@ lara_lumen_elasticsearch
 =====
 ![travis test result](https://travis-ci.org/dishcheng/lara_lumen_elasticsearch.svg?branch=master)
 ![travis stable tag](https://poser.pugx.org/dishcheng/lara_lumen_elasticsearch/v/stable.svg)
-![license](https://poser.pugx.org/dishcheng/lara_lumen_elasticsearch/license])
+![license](https://poser.pugx.org/dishcheng/lara_lumen_elasticsearch/license.svg])
 
 
 The project inspired by [elasticquent/Elasticquent](https://github.com/elasticquent/Elasticquent/) ,but it didn't support elasticSearch 7.x now.
