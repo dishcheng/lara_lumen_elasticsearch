@@ -1,30 +1,30 @@
+lara_lumen_elasticsearch
+=====
 The project inspired by `https://github.com/elasticquent/Elasticquent/`,but it didn't support elasticSearch 7.x now.
 
 I don't suggest use in production now . Just tested in lumen6.x + elasticSearch 7.x
 
-## Official Document
+## ES Official Document
 Based on `https://github.com/elastic/elasticsearch-php/tree/7.x`
 
 `https://www.elastic.co/guide/en/elasticsearch/client/php-api/current/index.html`
 
-
-
-### First Step
+## First Step
 ```
 composer require dishcheng/lara_lumen_elasticsearch
 ```
 
-
-### In lumen
+## In lumen
 move `vendor/dishcheng/lara_lumen_elastcisearch/config/elasticsearch.php` to `config/elasticsearch.php`
+
+
 ```php
 $app->configure('elasticsearch');
 $app->register(\DishCheng\LaraLumenElasticSearch\LaraElasticSearchProvider::class);
 ```
 
-
-### How to use
-#### set model
+## How to use
+### set model
 ```
 <?php
 
@@ -91,42 +91,40 @@ class Order extends Model
 
 ```
 
-#### create es index
+### create es index
 ```php
 Order::createModelIndex(2, 0);
 ```
 
-#### delete es index
+### delete es index
 ```php
 Order::deleteModelIndex();
 ```
 
-#### index all  table
+### index all  table
 use `chunkBy`
 ```php
 Order::allReIndex(3000, 'created_at');
 ```
 
-
-#### index some data
+### index some data
 ```php
 $orders=Order::whereDate('created_at','>','2020-01-01')->get();
 $res=$orders->addDocumentsToIndex();
 ```
 
-#### delete some data from index
+### delete some data from index
 ```php
 $orders=Order::whereDate('created_at','>','2020-01-01')->get();
  $res=$orders->deleteDocsFromIndex();
 ```
 
-#### get document by key or fail
+### get document by key or fail
 ```php
 $res1=Order::getDocumentByKeyOrFail('xxxxxx');
 ```
 
-
-#### update partial document by key or fail
+### update partial document by key or fail
 ```php
 Order::updatePartialDocumentByKeyOrFail('xxxxxx',
 [
@@ -134,7 +132,7 @@ Order::updatePartialDocumentByKeyOrFail('xxxxxx',
 ]);
 ```
 
-#### update or insert document by key
+### update or insert document by key
 ```php
 Order::updatePartialOrAddDocumentByKey('xxxxxx',
 [
@@ -142,22 +140,22 @@ Order::updatePartialOrAddDocumentByKey('xxxxxx',
 ]);
 ```
 
-#### get Index Mapping
+### get Index Mapping
 ```php
 Order::getModelMapping();
 ```
 
-#### update Index Mapping
+### update Index Mapping
 ```php
 Order::updateMapping();
 ```
 
-#### check Index Mapping exists
+### check Index Mapping exists
 ```php
 Order::mappingExists();
 ```
 
-#### query data
+### query data
 ```php
         $res=(Order::searchByQuery([
             'constant_score'=>[
@@ -197,5 +195,5 @@ dd($res, $res->getItems(), $res->totalHitsNumber(), $res->maxScore(),$res->getAg
 
 
 
-### License
+## License
 Open-sourced software licensed under the MIT license.
