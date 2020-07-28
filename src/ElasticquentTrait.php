@@ -71,7 +71,7 @@ trait ElasticquentTrait
      */
     public function newCollection(array $models=array())
     {
-        $collection= new ElasticquentCollection($models);
+        $collection=new ElasticquentCollection($models);
         $collection->es_config=$this->es_config;
         return $collection;
     }
@@ -381,12 +381,11 @@ trait ElasticquentTrait
         return $instance::getMapping($params);
     }
 
+
     /**
-     * Put Mapping.
-     *
      * @param bool $ignoreConflicts
-     *
      * @return array
+     * @throws Exception
      */
     public static function updateMapping($ignoreConflicts=false)
     {
@@ -394,6 +393,10 @@ trait ElasticquentTrait
 
         $mapping=$instance->getBasicEsParams();
 
+
+        if (is_null($instance->getMappingProperties())) {
+            throw new Exception('Mapping Can\'t be Null');
+        }
         $params=array(
             '_source'=>array('enabled'=>true),
             'properties'=>$instance->getMappingProperties(),
@@ -401,6 +404,8 @@ trait ElasticquentTrait
 
         $mapping['body']=$params;
 
+
+        dd($mapping);
         return $instance::putMapping($mapping);
     }
 
@@ -464,17 +469,21 @@ trait ElasticquentTrait
 
     /**
      * @param int $chunkSize
-     * @param null $column
+     * @param null $primaryKey
      */
-    public static function allReIndex(int $chunkSize, $column=null)
+    public static function allReIndex(int $chunkSize, $primaryKey=null, $coulumns=['*'], $connection='')
     {
         $instance=new static;
-        if (is_null($column)) {
-            $column=$instance->getKeyName();
+        if (is_null($primaryKey)) {
+            $primaryKey=$instance->getKeyName();
         }
-        $instance->query()->chunkById($chunkSize, function ($docs) {
-            $docs->addDocumentsToIndex();
-        }, $column);
+        if ($connection!='') {
+            $instance->setConnection($connection);
+        }
+        $instance->select($coulumns)
+            ->chunkById($chunkSize, function ($docs) {
+                $docs->addDocumentsToIndex();
+            }, $primaryKey);
     }
 
     /**
