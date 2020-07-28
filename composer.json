@@ -1,7 +1,7 @@
 {
     "name": "dishcheng/lara_lumen_elasticsearch",
-    "type": "composer-plugin",
     "license": "MIT",
+    "type": "library",
     "keywords": ["lumen", "laravel", "elasticsearch"],
     "homepage": "https://www.cc430.cn",
     "authors": [
