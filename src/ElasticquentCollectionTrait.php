@@ -37,6 +37,11 @@ trait ElasticquentCollectionTrait
 //    }
 
 
+    public function getEsDocumentId()
+    {
+
+    }
+
     /**
      * @return |null
      * @throws \Exception
@@ -58,9 +63,10 @@ trait ElasticquentCollectionTrait
             $chunk=array_slice($all, (0+($iteration*static::$entriesToSendToElasticSearchInOneGo)), static::$entriesToSendToElasticSearchInOneGo);
             $params=array();
             foreach ($chunk as $item) {
+
                 $params['body'][]=array(
                     'index'=>array(
-                        '_id'=>$item->getKey(),
+                        '_id'=>$item->getEsIdByPrimaryKey(),
                         '_index'=>$item->indexName(),
                     ),
                 );
@@ -89,7 +95,7 @@ trait ElasticquentCollectionTrait
         foreach ($all as $item) {
             $params['body'][]=array(
                 'delete'=>array(
-                    '_id'=>$item->getKey(),
+                    '_id'=>$item->getEsIdByPrimaryKey(),
                     '_index'=>$item->indexName(),
                 ),
             );

@@ -55,9 +55,6 @@ trait ElasticquentTrait
     protected $documentVersion=null;
 
 
-    protected $indexSettings=[];
-
-
     /**
      * @var array
      */
@@ -222,6 +219,35 @@ trait ElasticquentTrait
         return static::hydrateElasticsearchResult($result);
     }
 
+
+    /**
+     * @return string
+     * @throws Exception
+     */
+    public function getEsIdByPrimaryKey()
+    {
+        if (is_string($this->getKeyName())) {
+            $id=$this->getKey();
+        } elseif (is_array($this->getKeyName())) {
+            $columns=$this->getKeyName();
+            $id_arr=[];
+            foreach ($columns as $column) {
+                $id_arr[]=$this->getAttribute($column);
+            }
+            $id_arr=array_filter($id_arr);
+            if (empty($id_arr)) {
+                //es自定义id
+                $id=null;
+            } else {
+                //程序定义id
+                $id=implode('_', $id_arr);
+            }
+        } else {
+            throw new \Exception('Primary Key Type ERROR');
+        }
+        return $id;
+    }
+
 //    /**
 //     * Search
 //     *
@@ -308,20 +334,21 @@ trait ElasticquentTrait
         ]);
     }
 
+
     /**
      * @param bool $getIdIfPossible
      * @param null $limit
      * @param null $offset
      * @return array
+     * @throws Exception
      */
     public function getBasicEsParams($getIdIfPossible=true, $limit=null, $offset=null)
     {
         $params=array(
             'index'=>$this->indexName(),
         );
-
-        if ($getIdIfPossible&&$this->getKey()) {
-            $params['id']=$this->getKey();
+        if ($getIdIfPossible&&$this->getEsIdByPrimaryKey()) {
+            $params['id']=$this->getEsIdByPrimaryKey();
         }
 
         if (is_numeric($limit)) {
@@ -370,14 +397,13 @@ trait ElasticquentTrait
     }
 
     /**
-     * Get Mapping
-     *
-     * @return void
+     * @return array
+     * @throws Exception
      */
     public static function getModelMapping()
     {
         $instance=new static;
-        $params=$instance->getBasicEsParams();
+        $params=$instance->getBasicEsParams(false);
         return $instance::getMapping($params);
     }
 
@@ -391,8 +417,7 @@ trait ElasticquentTrait
     {
         $instance=new static;
 
-        $mapping=$instance->getBasicEsParams();
-
+        $mapping=$instance->getBasicEsParams(false);
 
         if (is_null($instance->getMappingProperties())) {
             throw new Exception('Mapping Can\'t be Null');
@@ -404,8 +429,6 @@ trait ElasticquentTrait
 
         $mapping['body']=$params;
 
-
-        dd($mapping);
         return $instance::putMapping($mapping);
     }
 
@@ -496,6 +519,9 @@ trait ElasticquentTrait
     public function newFromHitBuilder($hit=array())
     {
         $key_name=$this->getKeyName();
+        if (is_array($key_name)) {
+            $key_name=implode('_', $key_name);
+        }
 
         $attributes=$hit['_source'];
 
