@@ -2,7 +2,7 @@
 
 namespace DishCheng\LaraLumenElasticSearch\Tests;
 
-class ExampleTest extends TestCase
+class ExampleTest extends \TestCase
 {
     public function testData()
     {
