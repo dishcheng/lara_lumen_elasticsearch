@@ -4,6 +4,7 @@ namespace DishCheng\LaraLumenElasticSearch;
 
 use DishCheng\LaraLumenElasticSearch\Actions\ElasticSearchTrait;
 use Exception;
+use GuzzleHttp\Tests\Stream\Str;
 use ReflectionMethod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -120,6 +121,25 @@ trait ElasticquentTrait
         $this->mappingProperties=$mapping;
     }
 
+
+    /**
+     * @return mixed
+     */
+    public function getEsIndexName()
+    {
+        return $this->esIndexName;
+    }
+
+
+    /**
+     * @param string $esIndexName
+     * @return mixed
+     */
+    public function setEsIndexName(string $esIndexName): void
+    {
+        $this->esIndexName=$esIndexName;
+    }
+
     /**
      * @return array
      */
@@ -181,11 +201,6 @@ trait ElasticquentTrait
     }
 
 
-    public function getIndexName()
-    {
-        return $this->indexName();
-    }
-
     /**
      * Get Index Document Data
      *
@@ -216,7 +231,7 @@ trait ElasticquentTrait
             $params=array_merge($params, $extra_params);
         }
 //        dd($params);
-        $result=$instance->eSearch($instance->indexName(), $params);
+        $result=$instance->eSearch($instance->esIndexName, $params);
         return static::hydrateElasticsearchResult($result);
     }
 
@@ -249,36 +264,6 @@ trait ElasticquentTrait
         return $id;
     }
 
-//    /**
-//     * Search
-//     *
-//     *
-//     * @param array $body
-//     *
-//     * @return ElasticquentResultCollection
-//     */
-//    public static function complexSearch($body=[])
-//    {
-//        $instance=new static;
-//        $result=$instance->search($instance->indexName(), $body);
-//        return static::hydrateElasticsearchResult($result);
-//    }
-
-//    /**
-//     * Partial Update to Indexed Document
-//     *
-//     * @return array
-//     */
-//    public function updateIndex()
-//    {
-//        $params=$this->getBasicEsParams();
-//
-//        // Get our document body data.
-//        $params['body']['doc']=$this->getIndexDocumentData();
-//
-//        return $this->getElasticSearchClient()->update($params);
-//    }
-
 
     /**
      * @param $id
@@ -302,7 +287,7 @@ trait ElasticquentTrait
     public static function getDocumentByKeyOrFail($id)
     {
         $instance=new static();
-        $res_data=$instance::getDocument($instance->indexName(), $id);
+        $res_data=$instance::getDocument($instance->esIndexName, $id);
         return self::newFromBuilderRecursive($instance, $res_data['_source']);
     }
 
@@ -317,7 +302,7 @@ trait ElasticquentTrait
     public static function updatePartialDocumentByKeyOrFail($id, $document_data, $extra=[])
     {
         $instance=new static();
-        return $instance::updateDocumentPartial($instance->indexName(), $id, array_merge([
+        return $instance::updateDocumentPartial($instance->esIndexName, $id, array_merge([
             'doc'=>$document_data,
         ], $extra));
     }
@@ -346,7 +331,7 @@ trait ElasticquentTrait
     public function getBasicEsParams($getIdIfPossible=true, $limit=null, $offset=null)
     {
         $params=array(
-            'index'=>$this->indexName(),
+            'index'=>$this->esIndexName,
         );
         if ($getIdIfPossible&&$this->getEsIdByPrimaryKey()) {
             $params['id']=$this->getEsIdByPrimaryKey();
@@ -463,7 +448,7 @@ trait ElasticquentTrait
                 'properties'=>$mappingProperties,
             ];
         }
-        return $instance::createIndex($instance->indexName(), $body);
+        return $instance::createIndex($instance->esIndexName, $body);
     }
 
     /**
@@ -474,7 +459,7 @@ trait ElasticquentTrait
     public static function deleteModelIndex()
     {
         $instance=new static;
-        return $instance::deleteIndex($instance->indexName());
+        return $instance::deleteIndex($instance->esIndexName);
     }
 
     /**
@@ -487,7 +472,7 @@ trait ElasticquentTrait
     public static function indexExists()
     {
         $instance=new static;
-        return $instance::exists(['index'=>$instance->indexName()]);
+        return $instance::exists(['index'=>$instance->esIndexName]);
     }
 
 

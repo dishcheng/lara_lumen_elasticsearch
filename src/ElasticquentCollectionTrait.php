@@ -63,16 +63,16 @@ trait ElasticquentCollectionTrait
             $chunk=array_slice($all, (0+($iteration*static::$entriesToSendToElasticSearchInOneGo)), static::$entriesToSendToElasticSearchInOneGo);
             $params=array();
             foreach ($chunk as $item) {
-
                 $params['body'][]=array(
                     'index'=>array(
                         '_id'=>$item->getEsIdByPrimaryKey(),
-                        '_index'=>$item->indexName(),
+                        '_index'=>$item->getEsIndexName(),
                     ),
                 );
                 $params['body'][]=$item->getIndexDocumentData();
             }
             $last_result=self::getEsClient()->bulk($params);
+
             if ((array_key_exists('errors', $last_result)&&$last_result['errors']!=false)
                 ||
                 (array_key_exists('Message', $last_result)&&stristr('Request size exceeded', $last_result['Message'])!==false)) {
@@ -98,7 +98,7 @@ trait ElasticquentCollectionTrait
             $params['body'][]=array(
                 'delete'=>array(
                     '_id'=>$item->getEsIdByPrimaryKey(),
-                    '_index'=>$item->indexName(),
+                    '_index'=>$item->getEsIndexName(),
                 ),
             );
         }

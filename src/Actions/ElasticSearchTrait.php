@@ -199,7 +199,6 @@ trait ElasticSearchTrait
         if (!empty($body)) {
             $params['body']=$body;
         }
-//        dd($params);
         return self::getEsClient()->search($params);
     }
 
