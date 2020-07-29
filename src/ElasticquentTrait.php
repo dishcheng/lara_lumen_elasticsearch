@@ -215,6 +215,7 @@ trait ElasticquentTrait
         if (!empty($extra_params)) {
             $params=array_merge($params, $extra_params);
         }
+//        dd($params);
         $result=$instance->eSearch($instance->indexName(), $params);
         return static::hydrateElasticsearchResult($result);
     }

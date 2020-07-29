@@ -73,7 +73,9 @@ trait ElasticquentCollectionTrait
                 $params['body'][]=$item->getIndexDocumentData();
             }
             $last_result=self::getEsClient()->bulk($params);
-            if ((array_key_exists('errors', $last_result)&&$last_result['errors']!=false)||(array_key_exists('Message', $last_result)&&stristr('Request size exceeded', $last_result['Message'])!==false)) {
+            if ((array_key_exists('errors', $last_result)&&$last_result['errors']!=false)
+                ||
+                (array_key_exists('Message', $last_result)&&stristr('Request size exceeded', $last_result['Message'])!==false)) {
                 throw new \Exception('ADD DOCUMENT FAILED , PLEASE CHECK DATA');
             }
             // Remove vars immediately to prevent them hanging around in memory, in case we have a large number of iterations
