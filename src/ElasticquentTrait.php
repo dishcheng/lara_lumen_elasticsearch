@@ -479,8 +479,10 @@ trait ElasticquentTrait
     /**
      * @param int $chunkSize
      * @param null $primaryKey
+     * @param array $columns
+     * @param string $connection
      */
-    public static function allReIndex(int $chunkSize, $primaryKey=null, $coulumns=['*'], $connection='')
+    public static function allReIndex(int $chunkSize, $primaryKey=null, $columns=['*'], $connection='')
     {
         $instance=new static;
         if (is_null($primaryKey)) {
@@ -489,7 +491,7 @@ trait ElasticquentTrait
         if ($connection!='') {
             $instance->setConnection($connection);
         }
-        $instance->select($coulumns)
+        $instance->select($columns)
             ->chunkById($chunkSize, function ($docs) {
                 $docs->addDocumentsToIndex();
             }, $primaryKey);
