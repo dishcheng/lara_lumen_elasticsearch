@@ -1,6 +1,5 @@
 <?php
-namespace DishCheng\LaraLumenElasticSearch;
-
+namespace DishCheng\LaraLumenElasticSearch\Collections;
 
 
 class ElasticquentCollection extends \Illuminate\Database\Eloquent\Collection

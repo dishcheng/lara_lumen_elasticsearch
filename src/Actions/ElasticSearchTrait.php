@@ -2,8 +2,6 @@
 
 namespace DishCheng\LaraLumenElasticSearch\Actions;
 
-use DishCheng\LaraLumenElasticSearch\Traits\ElasticsearchClientTrait;
-
 /**
  * https://www.elastic.co/guide/en/elasticsearch/client/php-api/current/search_operations.html
  *
@@ -14,7 +12,7 @@ trait ElasticSearchTrait
 {
     use ElasticsearchClientTrait;
 
-    
+
     public static function getEsClient()
     {
         $instance=new self();

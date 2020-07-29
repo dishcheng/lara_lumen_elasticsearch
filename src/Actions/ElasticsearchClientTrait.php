@@ -1,6 +1,6 @@
 <?php
 
-namespace DishCheng\LaraLumenElasticSearch\Traits;
+namespace DishCheng\LaraLumenElasticSearch\Actions;
 
 use Elasticsearch\ClientBuilder;
 

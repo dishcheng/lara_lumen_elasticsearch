@@ -3,8 +3,9 @@
 namespace DishCheng\LaraLumenElasticSearch;
 
 use DishCheng\LaraLumenElasticSearch\Actions\ElasticSearchTrait;
+use DishCheng\LaraLumenElasticSearch\Collections\ElasticquentCollection;
+use DishCheng\LaraLumenElasticSearch\Collections\ElasticquentResultCollection;
 use Exception;
-use GuzzleHttp\Tests\Stream\Str;
 use ReflectionMethod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;

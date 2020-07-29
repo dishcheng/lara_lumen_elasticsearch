@@ -1,8 +1,8 @@
 <?php
 
-namespace DishCheng\LaraLumenElasticSearch;
+namespace DishCheng\LaraLumenElasticSearch\Collections;
 
-use DishCheng\LaraLumenElasticSearch\Actions\ElasticSearchTrait;
+use DishCheng\LaraLumenElasticSearch\ElasticquentTrait;
 
 /**
  * Elasticquent Collection Trait

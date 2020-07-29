@@ -1,5 +1,5 @@
 <?php
-namespace DishCheng\LaraLumenElasticSearch;
+namespace DishCheng\LaraLumenElasticSearch\Collections;
 
 use DishCheng\LaraLumenElasticSearch\ElasticquentPaginator as Paginator;
 
