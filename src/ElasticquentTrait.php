@@ -6,6 +6,7 @@ use DishCheng\LaraLumenElasticSearch\Actions\ElasticSearchTrait;
 use DishCheng\LaraLumenElasticSearch\Collections\ElasticquentCollection;
 use DishCheng\LaraLumenElasticSearch\Collections\ElasticquentResultCollection;
 use Exception;
+use Illuminate\Database\Query\Builder;
 use ReflectionMethod;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -221,7 +222,7 @@ trait ElasticquentTrait
      * @param array $extra_params
      * @return ElasticquentResultCollection
      */
-    public static function searchByQuery($query=[], $extra_params=[])
+    public static  function searchByQuery($query,$extra_params)
     {
         $instance=new static;
         $params=[];
